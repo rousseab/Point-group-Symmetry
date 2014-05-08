@@ -1,11 +1,14 @@
 import parse as P
 import numpy as N
 import os
+import cPickle
+
+from point_group import PointGroup
 
 class PointGroupFortranParser(object):
     """
-    Object which will contain the symmetries and representation 
-    of a point group.
+    Object which will extract the symmetries and representation 
+    of a point group from Fortran code.
     """
 
     def __init__(self,fortran_filename):
@@ -15,6 +18,11 @@ class PointGroupFortranParser(object):
         self.group_name = os.path.basename(fortran_filename).replace('ptg_','').replace('.F90','')
 
         self.extract_group_information_from_Fortran()
+
+
+    def get_point_group(self):
+        return PointGroup(self.group_name, self.symmetries, self.representations, self.characters)
+
 
     def parsing_string_to_matrix(self, string):
 
@@ -94,4 +102,41 @@ class PointGroupFortranParser(object):
             name, rep = dic_class[key]
             self.representations[name] = rep 
             self.characters[name] = rep.trace(axis1=1,axis2=2)
+
+
+def create_pickle_file():
+    """
+    Read all the fortran code and dump the groups info in a json file.
+    """
+
+    path = '/Users/Bruno/work/depository/abinit-7.6.3/src/43_ptgroups/'
+
+    groups = {}
+
+    for filename in os.listdir(path):
+        if 'ptg_' in filename and '.F90' in filename:
+
+            fortran_filename = path+filename
+
+            parser = PointGroupFortranParser(fortran_filename)
+
+            G = parser.get_point_group()
+
+            groups[G.name] = G
+
+    outfile = open('point_groups.pkl','w')
+    cPickle.dump(groups,outfile)
+
+
+
+def load_pickle_file():
+
+    file = open('point_groups.pkl','r')
+    groups = cPickle.load(file)
+
+    return groups
+
+
+if __name__ == '__main__':
+    create_pickle_file()
 
