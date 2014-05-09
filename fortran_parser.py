@@ -128,7 +128,6 @@ def create_pickle_file():
     cPickle.dump(groups,outfile)
 
 
-
 def load_pickle_file():
 
     file = open('point_groups.pkl','r')
