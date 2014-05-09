@@ -16,10 +16,7 @@ class PointGroup(object):
         self.characters      = characters
 
 
-
-
     def get_irreducible_representations(self,reducible_characters):
-
 
         NG = 1.*len(self.symmetries)
 

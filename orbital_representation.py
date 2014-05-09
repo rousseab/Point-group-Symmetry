@@ -115,7 +115,3 @@ def get_representation_matrix(l, Group_Operation):
     Representation_Matrix = sign**l * D.get_matrix()
 
     return Representation_Matrix 
-
-
-
-
