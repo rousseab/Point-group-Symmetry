@@ -11,10 +11,20 @@ groups = load_pickle_file()
 
 Group = groups['Oh']
 
+#l = 1
+#generators = [ ([0.0,0.0,1.0], l) ]
 
-l = 1
-generators = [ ([0.0,0.0,1.0],l) ]
+#l = 2
+#generators = [ ([0.0,0.0,0.0], l) ]
+
+l = 2
+generators = [([0.0,0.0,1.0], 1), ([0.0,0.0,0.0], 2) ]
+
+
+
+
 sites      = SymmetricSites( Group, generators )
+
 
 list_irr = sites.extract_irreducible_representations()
 

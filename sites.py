@@ -76,9 +76,6 @@ class SymmetricSites(object):
                 self.representation[isym,i1:i2,j1:j2] = D
 
 
-
-
-
     def new_vector(self,vector):
         tol = 1e-8
 
